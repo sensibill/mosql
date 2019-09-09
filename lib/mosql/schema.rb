@@ -115,7 +115,6 @@ module MoSQL
                 end
               column '_extra_props', type
             end
-            log.info("Table created.")
           end
         end
       end
