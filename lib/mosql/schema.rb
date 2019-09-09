@@ -76,13 +76,17 @@ module MoSQL
     end
 
     def create_schema(db, clobber=false)
+      log.info("Creating schema and tables...")
+      unless clobber
+        log.info("Not dropping existing tables given no-drop-tables option...")
+      end
       @map.values.each do |dbspec|
         dbspec.each do |n, collection|
           next unless n.is_a?(String)
           meta = collection[:meta]
           composite_key = meta[:composite_key]
           keys = []
-          log.info("Creating table '#{meta[:table]}'...")
+          log.info("Creating table '#{meta[:table]}' if needed...")
           db.send(clobber ? :create_table! : :create_table?, meta[:table]) do
             collection[:columns].each do |col|
               opts = {}
