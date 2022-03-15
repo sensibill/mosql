@@ -197,6 +197,8 @@ module MoSQL
         end
       when BSON::DBRef
         v.object_id.to_s
+      when String
+        v.to_s.gsub("\u0000", "").gsub("\x00", "")
       else
         v
       end
